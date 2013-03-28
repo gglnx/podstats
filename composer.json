@@ -1,0 +1,7 @@
+{
+    "require": {
+        "php": ">=5.4.0",
+        "gglnx/nautik": "dev-master",
+		"gglnx/mongoium": "dev-master"
+    }
+}
