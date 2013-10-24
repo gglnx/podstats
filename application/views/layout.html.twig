@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!--[if lt IE 9]><html class="ie" lang="de"><![endif]-->
+<!--[if gte IE 9]><!--><html lang="de"><!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<title>{% block title %}podstats{% endblock %}</title>
+
+	<meta name="title" content="{% block meta_title %}{% endblock %}" />
+	<meta name="description" content="{% block meta_description %}{% endblock %}" />
+	<meta name="robots" content="{% block robots %}index, follow{% endblock %}" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="copyright" content="" />
+	
+	<link rel="index" title="podstats" href="/" />
+	<link rel="canonical" href="{% block url %}{% endblock %}" />
+	<link rel="stylesheet" href="/stylesheets/main.css" />
+</head>
+
+<body>
+	<header role="banner">
+		<h1><a href="/" title="podstats">podstats</a></h1>
+	</header>
+	
+	<main role="main">
+		{% block content %}{% endblock %}
+	</main>
+	
+	<footer role="contentinfo">
+		
+	</footer>
+</body>
+</html>

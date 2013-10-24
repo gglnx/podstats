@@ -37,4 +37,11 @@ class Application extends \Nautik\Nautik {
 	 * @see http://www.php.net/setlocale
 	 */
 	public static $locale = array('de_DE.UTF-8', 'de_DE@euro', 'de_DE', 'deu_deu');
+	
+	/**
+	 * Configure database connection
+	 */
+	public static function preApplicationStart() {
+		\Mongoium\Connection::init("192.168.30.8", "podcasts");
+	}
 }

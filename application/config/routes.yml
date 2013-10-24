@@ -6,4 +6,9 @@ homepage:
 # Static pages
 static:
     path: /pages/{page}
-    defaults: { _controller: pages, _action: render }
+    defaults: { _controller: pages, _action: render }	
+
+# Index for a podcast
+podcast_index:
+    path: /{podcast}
+    defaults: { _controller: podcast, _action: index }
