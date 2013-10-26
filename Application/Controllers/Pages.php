@@ -10,12 +10,12 @@
 /**
  * Namespace
  */
-namespace App;
+namespace Application\Controllers;
 
 /**
  *
  */
-class pagesController extends baseController {
+class Pages extends MasterController {
 	public function indexAction() {
 		// Display homepage
 	}

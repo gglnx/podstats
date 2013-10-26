@@ -1,19 +1,19 @@
 # Homepage
 homepage:
     path: /
-    defaults: { _controller: pages }
+    defaults: { _controller: Pages }
 
 # Static pages
 static:
     path: /pages/{page}
-    defaults: { _controller: pages, _action: render }
+    defaults: { _controller: Pages, _action: render }
 
 # Index for a podcast
 podcast_index:
     path: /{podcast}
-    defaults: { _controller: podcast, _action: index }
+    defaults: { _controller: Podcast, _action: index }
 
 # Index for a episode
 episode_index:
     path: /{podcast}/{episode}
-    defaults: { _controller: episode, _action: index }
+    defaults: { _controller: Episode, _action: index }

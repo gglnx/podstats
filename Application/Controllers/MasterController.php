@@ -6,17 +6,15 @@
  * @author      Dennis Morhardt <info@dennismorhardt.de>
  * @copyright   Copyright 2013, Dennis Morhardt
  */
- 
+
 /**
  * Namespace
  */
-namespace App;
+namespace Application\Controllers;
 
 /**
- *
+ * The BaseController is base for all controllers this app
  */
-class errorsController extends baseController {
-	public function display404() {
-		// Display homepage
-	}
+class MasterController extends \Nautik\Controller {
+
 }

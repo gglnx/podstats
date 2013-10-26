@@ -10,7 +10,7 @@
 /**
  * Namespace
  */
-namespace App;
+namespace Application;
 
 /**
  * Application main class
@@ -37,6 +37,12 @@ class Application extends \Nautik\Nautik {
 	 * @see http://www.php.net/setlocale
 	 */
 	public static $locale = array('de_DE.UTF-8', 'de_DE@euro', 'de_DE', 'deu_deu');
+
+	/**
+	 * Default route
+	 * Used to catch not found routes and display an 404 error page
+	 */
+	public static $defaultRoute = ['_controller' => 'Errors', '_action' => '404'];
 	
 	/**
 	 * Configure database connection
