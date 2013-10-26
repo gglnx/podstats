@@ -41,13 +41,12 @@ class Podcast extends MasterController {
 		// Check for errors
 		if ( 0 == $data["ok"] )
 			throw new \Exception("Fehler: " . $data["errmsg"] . " (Code: " . $data["code"] . ")");
-		
+
 		// Format data
 		$days = array();
 		foreach ( $data["result"] as $day ):
 			$date = \DateTime::createFromFormat('z Y', strval($day['_id']-1) . ' ' . strval($day['year'][0]));
-			$date = '"' . $date->format("d.m.") . '"';
-			$days[$date] = $day["downloads"];
+			$days[] = (object) array('date' => $date->format("Y-m-d"), 'downloads' => $day["downloads"]);
 		endforeach;
 		
 		// Get unformated download counts
@@ -70,8 +69,7 @@ class Podcast extends MasterController {
 		return array(
 			"podcast" => $podcast,
 			"episodes" => $episodes,
-			"last30days" => implode(", ", array_values($days)),
-			"last30days_labels" => implode(", ", array_keys($days))
+			"downloads" => json_encode($days)
 		);
 	}
 }

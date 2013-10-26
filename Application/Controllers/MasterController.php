@@ -49,11 +49,13 @@ class MasterController extends \Nautik\Controller {
 
 			// Render labels as hours, days or months
 			if ( "hour" == $matched[3] || ( "day" == $matched[3] && 2 >= $matched[1] ) )
-				$timeframe->label = 'H:00';
-			elseif ( "day" == $matched[3] || ( "month" == $matched[3] && 1 == $matched[1] ) )
-				$timeframe->label = 'd.m.';
+				$timeframe->label = 'HH:00';
+			elseif ( "day" == $matched[3] )
+				$timeframe->label = 'D.MM.';
+			elseif ( "month" == $matched[3] && 1 == $matched[1] )
+				$timeframe->label = 'D.MM.';
 			else
-				$timeframe->label = 'm.Y';
+				$timeframe->label = 'MM.YYYY';
 
 			// Display one day as 24 hours, two days as 48 hours
 			if ( "day" == $matched[3] && 2 >= $matched[1] )
@@ -62,12 +64,8 @@ class MasterController extends \Nautik\Controller {
 			elseif ( "month" == $matched[3] && 1 == $matched[1] )
 				$matched = ['30days', 30, 'days', 'day'];
 
-			// Generate data sample
-			$timeframe->dataset[] = new \DateTime("now");
-			for ( $i = 1; $i < $matched[1]; $i++ ):
-				$datapoint = clone $timeframe->dataset[$i-1];
-				$timeframe->dataset[] = $datapoint->modify("-1" . $matched[3]);
-			endfor;
+			// Add matched timeframe
+			$timeframe->matched = $matched;
 		// Yesterday / Today (default)
 		else:
 			// Start and end value
@@ -86,16 +84,9 @@ class MasterController extends \Nautik\Controller {
 			// Render labels as hours
 			$timeframe->label = 'H:00';
 
-			// Generate data sample
-			$timeframe->dataset[] = new \DateTime("{$end} -1hour");
-			for ( $i = 1; $i < 24; $i++ ):
-				$datapoint = clone $timeframe->dataset[$i-1];
-				$timeframe->dataset[] = $datapoint->modify("-1hour");
-			endfor;
+			// Add matched timeframe
+			$timeframe->matched = ['1day', 1, 'days', 'day'];
 		endif;
-
-		// Reserve dateset
-		$timeframe->dataset = array_reverse($timeframe->dataset);
 
 		return $timeframe;
 	}

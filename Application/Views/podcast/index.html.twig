@@ -5,55 +5,29 @@
 		<h1>{{ podcast.title }}</h1>
 	</header>
 	
-	<div class="inner">
-		<h2>Downloads: {{ timeframe.human }}</h2>
-		<div id="last30days"></div>
-		<script src="/javascripts/d3.js"></script>
+	<div class="fullsize">
+		<h2 class="inner">Downloads: {{ timeframe.human }}</h2>
+		<div id="downloads" style="height: 250px;"></div>
 		<script type="text/javascript">
-			// Data
-			var dataset = [{{ last30days }}];
-			var dates = [{{ last30days_labels | raw }}];
-			
-			// Width and height
-			var w = 960;
-			var h = 250;
-					   
-			// x-Scala & y-Scala
-			var xScale = d3.scale.ordinal().domain(d3.range(dataset.length)).rangeBands([0, w], 0.05, 0);
-			var yScale = d3.scale.linear().domain([0, d3.max(dataset)]).range([0, h - 45]);
-			
-			// Define X axis
-			var xAxis = d3.svg.axis().scale(xScale).orient("bottom").tickValues(dates);
+			moment.lang('de');
 
-			// Create SVG element
-			var svg = d3.select("div#last30days").append("svg").attr("width", w).attr("height", h);
-
-			// Create bars
-			svg.selectAll("rect").data(dataset).enter().append("rect").attr("fill", "steelblue")
-			
-			// Position
-			.attr("x", function(d, i) { return xScale(i); })
-			.attr("y", function(d) { return h - yScale(d) - 25; })
-			
-			// Width and height
-			.attr("width", xScale.rangeBand())
-			.attr("height", function(d) { return yScale(d); });
-
-			// Create labels
-			svg.selectAll("text").data(dataset).enter().append("text").text(function(d) { return d; })
-			
-			// Label styling
-			.attr("text-anchor", "middle")
-			.attr("font-family", "sans-serif")
-			.attr("font-size", "11px")
-			.attr("fill", "#888")
-					   
-			// Position
-			.attr("x", function(d, i) { return xScale(i) + xScale.rangeBand() / 2; })
-			.attr("y", function(d) { return h - yScale(d) - 25 - 7; });
-					   
-			// Create X axis
-			svg.append("g").attr("class", "axis").attr("transform", "translate(0," + (h-20) + ")").call(xAxis);	  
+			new Morris.Area({
+				element: 'downloads',
+				data: {{ downloads | raw }},
+				xkey: 'date',
+				fillOpacity: 0.4,
+				xLabels: '{{ timeframe.matched.3 }}',
+				hideHover: true,
+				hoverCallback: function hoverCallback(index, options, content) {
+					var row = options.data[index];
+					return '<div class="morris-hover-row-label">' + moment(row.date).format('DD.MM.YYYY') + '</div><div class="morris-hover-point" style="color: #0b62a4">Downloads: ' + row.downloads + '</div>';
+				},
+				xLabelFormat: function formatLocalDate(date) {
+					return moment(date).format('{{ timeframe.label }}');
+				},
+				ykeys: ['downloads'],
+				labels: ['Downloads']
+			});
 		</script>
 	</div>
 	
