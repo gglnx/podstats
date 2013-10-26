@@ -151,6 +151,14 @@ body > main h1 {
 	width:960px;
 	font:26px/26px "PT Sans", Helmet, Freesans, sans-serif;
 }
+
+body > main h1 a {
+	color: #000;
+}
+
+body > main h1 span {
+	color: #ccc;
+}
  
 body > main h2 {
 	font:18px/24px "PT Sans", Helmet, Freesans, sans-serif;
