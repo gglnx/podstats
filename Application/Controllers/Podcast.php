@@ -24,12 +24,15 @@ use \Mongoium\Document as Document;
  */
 class Podcast extends MasterController {
 	public function indexAction() {
+		// Timeframe
+		$this->timeframe = $this->timeframe();
+
 		// Try to find the requested podcast
 		$podcast = Query::init("podcasts")->is("slug", $this->attr("podcast"))->findOne();
 		
 		// Get downloads for last 30 days
 		$data = Connection::getCollection("downloads")->aggregate(array(
-			array('$match' => array('downloaded_at' => array('$gte' => new \MongoDate(time() - (60*60*24*30))), 'podcast' => $this->attr("podcast"))),
+			array('$match' => array('downloaded_at' => $this->timeframe->query, 'podcast' => $this->attr("podcast"))),
 			array('$project' => array('day' => array('$dayOfYear' => '$downloaded_at'), 'year' => array('$year' => '$downloaded_at'))),
 			array('$group' => array('_id' => '$day', 'year' => array('$addToSet' => '$year'), 'downloads' => array('$sum' => 1))),
 			array('$sort' => array('_id' => 1))

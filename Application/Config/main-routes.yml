@@ -1,0 +1,19 @@
+# Homepage
+homepage:
+    path: /
+    defaults: { _controller: Pages }
+
+# Static pages
+static:
+    path: /pages/{page}
+    defaults: { _controller: Pages, _action: render }
+
+# Index for a podcast
+podcast_index:
+    path: /{podcast}/{timeframe}
+    defaults: { _controller: Podcast, _action: index, timeframe: 30days }
+
+# Index for a episode
+episode_index:
+    path: /{podcast}/{episode}/{timeframe}
+    defaults: { _controller: Episode, _action: index, timeframe: 30days }
