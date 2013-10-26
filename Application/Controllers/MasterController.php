@@ -85,7 +85,7 @@ class MasterController extends \Nautik\Controller {
 			$timeframe->label = 'H:00';
 
 			// Add matched timeframe
-			$timeframe->matched = ['1day', 1, 'days', 'day'];
+			$timeframe->matched = ['24hours', 24, 'hours', 'hour'];
 		endif;
 
 		return $timeframe;

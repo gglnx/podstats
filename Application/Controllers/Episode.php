@@ -34,11 +34,38 @@ class Episode extends MasterController {
 		$episode = $this->attr("episode");
 		$podcast = Query::init("podcasts")->is("slug", $this->attr("podcast"))->findOne();
 
+		// Aggregate by day or hour?
+		$id = ['year' => '$year', 'month' => '$month', 'day' => '$day'];
+		$format = 'Y-m-d';
+		if ( 'hour' == $this->timeframe->matched[3] ):
+			$id = ['year' => '$year', 'month' => '$month', 'day' => '$day', 'hour' => '$hour'];
+			$format = 'Y-m-d H:00';
+		endif;
+
 		// Get downloads for last 30 days
 		$data = Connection::getCollection("downloads")->aggregate(array(
-			array('$match' => array('episode' => $episode, 'downloaded_at' => $this->timeframe->query, 'podcast' => $this->attr("podcast"))),
-			array('$project' => array('day' => array('$dayOfYear' => '$downloaded_at'), 'year' => array('$year' => '$downloaded_at'))),
-			array('$group' => array('_id' => '$day', 'year' => array('$addToSet' => '$year'), 'downloads' => array('$sum' => 1))),
+			// Build query
+			array('$match' => array(
+				'downloaded_at' => $this->timeframe->query,
+				'podcast' => $this->attr("podcast"),
+				'episode' => $episode
+			)),
+
+			// Build project
+			array('$project' => array(
+				'hour' => ['$hour' => '$downloaded_at'],
+				'month' => ['$month' => '$downloaded_at'],
+				'day' => ['$dayOfYear' => '$downloaded_at'],
+				'year' => ['$year' => '$downloaded_at']
+			)),
+
+			// Group data
+			array('$group' => array(
+				'_id' => $id,
+				'downloads' => array('$sum' => 1)
+			)),
+
+			// Sort data
 			array('$sort' => array('_id' => 1))
 		));
 	
@@ -47,17 +74,24 @@ class Episode extends MasterController {
 			throw new \Exception("Fehler: " . $data["errmsg"] . " (Code: " . $data["code"] . ")");
 
 		// Format data
-		$days = array();
+		$dataPoints = array();
 		foreach ( $data["result"] as $day ):
-			$date = \DateTime::createFromFormat('z Y', strval($day['_id']-1) . ' ' . strval($day['year'][0]));
-			$days[] = (object) array('date' => $date->format("Y-m-d"), 'downloads' => $day["downloads"]);
+			// Create date object
+			$date = \DateTime::createFromFormat('z Y', strval($day['_id']['day']-1) . ' ' . strval($day['_id']['year']));
+
+			// Set hour
+			if ( isset( $day['_id']['hour'] ) )
+				$date->setTime($day['_id']['hour'], 0);
+			
+			// Add data point
+			$dataPoints[] = (object) array('date' => $date->format($format), 'downloads' => $day["downloads"]);
 		endforeach;
 
 		// Return to view
 		return array(
 			"podcast" => $podcast,
 			"episode" => $episode,
-			"downloads" => json_encode($days)
+			"downloads" => json_encode($dataPoints)
 		);
 	}
 }
