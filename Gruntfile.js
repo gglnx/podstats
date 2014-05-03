@@ -119,7 +119,9 @@ module.exports = function(grunt) {
 						'.tmp',
 						'<%= paths.public %>/*',
 						'!<%= paths.public %>/.git*',
-						'!<%= paths.public %>/index*'
+						'!<%= paths.public %>/index.php*',
+						'!<%= paths.public %>/fonts/*',
+						'!<%= paths.public %>/stylesheets/*'
 					]
 				}]
 			},
@@ -175,7 +177,8 @@ module.exports = function(grunt) {
 				options: {
 					'baseUrl': '.tmp/javascripts',
 					'mainConfigFile': '.tmp/javascripts/main.js',
-					'out': 'public/javascripts/main.js'
+					'out': 'public/javascripts/main.js',
+					'name': 'main'
 				}
 			}
 		},

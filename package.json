@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Podstats generates epic statistics from your podcast download logs",
   "homepage": "http://podstats.org/",
-  "license" : "BSD-3-Clause",
+  "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
     "url": "https://github.com/gglnx/podstats.git"
@@ -26,10 +26,10 @@
     "grunt-contrib-symlink": "~0.2.0",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-open": "~0.2.2",
-    "grunt-requirejs": "~0.4.0",
     "grunt-svgmin": "~0.3.0",
     "grunt-webfont": "~0.2.1",
-    "matchdep": "~0.3.0"
+    "matchdep": "~0.3.0",
+    "grunt-contrib-requirejs": "~0.4.4"
   },
   "engines": {
     "node": ">=0.8.0"
