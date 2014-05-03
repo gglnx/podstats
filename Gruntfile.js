@@ -55,7 +55,7 @@ module.exports = function(grunt) {
 		watch: {
 			coffee: {
 				files: ['<%= paths.assets %>/javascripts/{,**/}*.coffee'],
-				tasks: ['newer:coffee:dist']
+				tasks: ['coffee:dist']
 			},
 			styles: {
 				files: ['<%= paths.assets %>/stylesheets/{,*/}*.css'],

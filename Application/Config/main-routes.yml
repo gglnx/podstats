@@ -17,3 +17,13 @@ podcast_index:
 episode_index:
     path: /{podcast}/{episode}/{timeframe}
     defaults: { _controller: Episode, _action: index, timeframe: 30days }
+
+# JSON: Download timeline
+api_v1_podcast_download_timeline:
+    path: /api/1/download_timeline/{podcast}/{timeframe}.json
+    defaults: { _controller: ApiV1\Podcast, _action: downloadTimeline, timeframe: 30days }
+
+# JSON: Download clients
+api_v1_podcast_download_clients:
+    path: /api/1/download_clients/{podcast}/{timeframe}.json
+    defaults: { _controller: ApiV1\Podcast, _action: downloadClients, timeframe: 30days }

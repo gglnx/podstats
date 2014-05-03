@@ -4,54 +4,23 @@
 	<header>
 		<h1>{{ podcast.title }}</h1>
 	</header>
-	
+
 	<div class="fullsize">
 		<h2 class="inner">Downloads: {{ timeframe.human }}</h2>
-		<div id="downloads" style="height: 250px;"></div>
-		<script type="text/javascript">
-			moment.lang('de');
-
-			new Morris.Area({
-				element: 'downloads',
-				data: {{ downloads | raw }},
-				gridTextFamily: '"PT Sans", Helmet, Freesans, sans-serif',
-				xkey: 'date',
-				fillOpacity: 0.4,
-				xLabels: '{{ timeframe.matched.3 }}',
-				hideHover: true,
-				hoverCallback: function hoverCallback(index, options, content) {
-					var row = options.data[index];
-					return '<div class="morris-hover-row-label">' + moment(row.date).format('DD.MM.YYYY') + '</div><div class="morris-hover-point" style="color: #0b62a4">Downloads: ' + row.downloads + '</div>';
-				},
-				xLabelFormat: function formatLocalDate(date) {
-					return moment(date).format('{{ timeframe.label }}');
-				},
-				ykeys: ['downloads'],
-				labels: ['Downloads']
-			});
-		</script>
+		<div id="download-timeline" data-type="download-timeline" data-source="{{ path('api_v1_podcast_download_timeline', {'podcast': podcast.slug, 'timeframe': timeframe.raw}) }}" data-xlabel="{{ timeframe.matched.3 }}" data-xlabel-format="{{ timeframe.label }}" class="graph-loading"></div>
 	</div>
-	
+
 	<div class="inner clearfix">
 		<div class="left">
 			<h2></h2>
 		</div>
-		
+
 		<div class="right">
 			<h2>Podcast-Clients</h2>
-			<div id="useragents" style="height: 300px;"></div>
-			<script type="text/javascript">
-				new Morris.Donut({
-					element: 'useragents',
-					data: {{ user_agents | raw }},
-					formatter: function formatDonutLabel(y, data) {
-						return y + '%';
-					}
-				});
-			</script>
+			<div id="download-useragents" data-type="download-clients" data-source="{{ path('api_v1_podcast_download_clients', {'podcast': podcast.slug, 'timeframe': timeframe.raw}) }}" class="graph-loading"></div>
 		</div>
 	</div>
-	
+
 	<div class="inner">
 		<h2>Alle Episoden</h2>
 		{% for episode, downloads in episodes %}

@@ -6,7 +6,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, 
 audio, canvas, video { display:inline-block; }
 audio:not([controls]) { display:none; height:0; }
 [hidden] { display:none; }
- 
+
 /**
  * Reset based on normalize.css and HTML5 Reset
  * @see https://necolas.github.com/normalize.css/2.1.0/normalize.css
@@ -176,7 +176,7 @@ body > main h1 a {
 body > main h1 span {
 	color: #ccc;
 }
- 
+
 body > main h2 {
 	font:18px/24px "PT Sans", Helmet, Freesans, sans-serif;
 	color:#666;
@@ -216,16 +216,19 @@ body > main .episode p a {
 }
 
 /**
- * D3
+ * Graphs
  */
-.axis path, .axis line {
-	fill:none;
-	stroke:#ccc;
-	shape-rendering:crispEdges;
+#download-timeline {
+	height: 250px;
 }
 
-.axis text {
-	font-family:sans-serif;
-	font-size:11px;
-	fill:#666;
+#download-useragents {
+	height: 300px;
+}
+
+.graph-loading {
+	background-image: url('/images/loader@2x.gif');
+	background-size: 40px 40px;
+	background-position: center;
+	background-repeat: no-repeat;
 }

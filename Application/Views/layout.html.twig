@@ -12,29 +12,27 @@
 	<meta name="robots" content="{% block robots %}index, follow{% endblock %}" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="copyright" content="" />
-	
+
 	<link rel="index" title="podstats" href="/" />
 	<link rel="canonical" href="{% block url %}{% endblock %}" />
+
 	<link rel="stylesheet" href="/stylesheets/main.css" />
 	<link rel="stylesheet" href="/stylesheets/morris.css" />
-
-	<script src="/javascripts/jquery.min.js"></script>
-	<script src="/javascripts/raphael.min.js"></script>
-	<script src="/javascripts/morris.min.js"></script>
-	<script src="/javascripts/moment.min.js"></script>
 </head>
 
 <body>
 	<header role="banner">
 		<h1><a href="/" title="podstats">podstats</a></h1>
 	</header>
-	
+
 	<main role="main">
 		{% block content %}{% endblock %}
 	</main>
-	
+
 	<footer role="contentinfo">
-		
+
 	</footer>
+
+	<script src="/components/requirejs/require.js" data-main="/javascripts/main"></script>
 </body>
 </html>
