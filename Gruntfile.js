@@ -171,25 +171,11 @@ module.exports = function(grunt) {
 
 		// RequireJS
 		requirejs: {
-			options: {
-				'appDir': '.tmp/javascripts',
-				'mainConfigFile': '.tmp/javascripts/common.js',
-				'dir': '.tmp/javascripts-build',
-				'optimize': 'uglify2',
-				'normalizeDirDefines': 'skip',
-				'skipDirOptimize': true
-			},
 			dist: {
 				options: {
-					'modules': [
-						{
-							'name': 'common',
-						},
-						{
-							'name': 'main',
-							'exclude': ['common'],
-						}
-					]
+					'baseUrl': '.tmp/javascripts',
+					'mainConfigFile': '.tmp/javascripts/main.js',
+					'out': 'public/javascripts/main.js'
 				}
 			}
 		},
@@ -247,13 +233,6 @@ module.exports = function(grunt) {
 				cwd: '<%= paths.assets %>/javascripts',
 				dest: '.tmp/javascripts/',
 				src: '{,*/}*.js'
-			},
-			packed_javascripts: {
-				expand: true,
-				dot: true,
-				cwd: '.tmp/javascripts',
-				dest: '<%= paths.public %>/javascripts/',
-				src: '*.js'
 			}
 		},
 
@@ -308,8 +287,7 @@ module.exports = function(grunt) {
 		'copy:javascripts',
 		'concurrent:dist',
 		'requirejs',
-		'copy:dist',
-		'copy:packed_javascripts'
+		'copy:dist'
 	]);
 
 	// Default task
