@@ -1,7 +1,31 @@
 {
-    "require": {
-        "php": ">=5.4.0",
-        "gglnx/nautik": "dev-master",
-		"gglnx/mongoium": "dev-master"
+  "name": "gglnx/podstats",
+  "license": "BSD-3-Clause",
+  "type": "project",
+  "description": "Podstats generates epic statistics from your podcast download logs",
+  "homepage": "http://podstats.org/",
+  "authors": [
+    {
+      "name": "Dennis Morhardt",
+      "email": "info@dennismorhardt.de",
+      "homepage": "http://www.dennismorhardt.de",
+      "role": "Developer"
     }
+  ],
+  "support": {
+    "email": "support@podstats.org",
+    "issues": "https://github.com/gglnx/podstats/issues",
+    "source": "https://github.com/gglnx/podstats"
+  },
+  "require": {
+    "php": ">=5.4.0",
+    "gglnx/nautik": "dev-master",
+    "stack/run": "1.0.*",
+    "stack/builder": "1.0.*",
+    "stack/session": "1.0.*@dev",
+    "gglnx/mongoium": "dev-master",
+    "vlucas/phpdotenv": "1.0.*",
+    "chrisboulton/php-resque": "1.2.*",
+    "filp/whoops": "1"
+  }
 }

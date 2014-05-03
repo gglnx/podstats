@@ -1,3 +1,8 @@
+.tmp
+.env
+*.sublime-*
 vendor
 composer.lock
+node_modules
 Application/Cache
+Application/Assets/Components

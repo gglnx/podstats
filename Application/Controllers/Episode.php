@@ -1,12 +1,12 @@
 <?php
 /**
  * @package     Podstats
- * @version     1.0
  * @link        http://podstats.org/
  * @author      Dennis Morhardt <info@dennismorhardt.de>
- * @copyright   Copyright 2013, Dennis Morhardt
+ * @copyright   Copyright 2014, Dennis Morhardt
+ * @license     BSD-3-Clause, http://opensource.org/licenses/BSD-3-Clause
  */
- 
+
 /**
  * Namespace
  */
@@ -24,7 +24,7 @@ use \Mongoium\Document as Document;
  */
 class Episode extends MasterController {
 	/**
-	 * 
+	 *
 	 */
 	public function indexAction() {
 		// Timeframe
@@ -68,7 +68,7 @@ class Episode extends MasterController {
 			// Sort data
 			array('$sort' => array('_id' => 1))
 		));
-	
+
 		// Check for errors
 		if ( 0 == $data["ok"] )
 			throw new \Exception("Fehler: " . $data["errmsg"] . " (Code: " . $data["code"] . ")");
@@ -82,7 +82,7 @@ class Episode extends MasterController {
 			// Set hour
 			if ( isset( $day['_id']['hour'] ) )
 				$date->setTime($day['_id']['hour'], 0);
-			
+
 			// Add data point
 			$dataPoints[] = (object) array('date' => $date->format($format), 'downloads' => $day["downloads"]);
 		endforeach;

@@ -1,19 +1,23 @@
 <?php
 /**
  * @package     Podstats
- * @version     1.0
  * @link        http://podstats.org/
  * @author      Dennis Morhardt <info@dennismorhardt.de>
- * @copyright   Copyright 2013, Dennis Morhardt
+ * @copyright   Copyright 2014, Dennis Morhardt
+ * @license     BSD-3-Clause, http://opensource.org/licenses/BSD-3-Clause
  */
 
-// Paths
-define('APP', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Application' . DIRECTORY_SEPARATOR);
-define('VENDOR', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR);
+// Startup application
+$application = include dirname(__FILE__) . '/application.php';
 
-// Load composer autoloader
-$composer = include VENDOR . 'autoload.php';
-$composer->set("Application", array(dirname(__FILE__)));
+// Exception handler
+$whoops = new \Whoops\Run;
+$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+$whoops->register();
 
-// Start application
-\Application\Application::run();
+// Middlewares
+$stack = (new Stack\Builder())
+	->push('Stack\Session');
+
+// Run application
+\Stack\run($stack->resolve($application));

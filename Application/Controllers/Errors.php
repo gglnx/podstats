@@ -1,12 +1,12 @@
 <?php
 /**
  * @package     Podstats
- * @version     1.0
  * @link        http://podstats.org/
  * @author      Dennis Morhardt <info@dennismorhardt.de>
- * @copyright   Copyright 2013, Dennis Morhardt
+ * @copyright   Copyright 2014, Dennis Morhardt
+ * @license     BSD-3-Clause, http://opensource.org/licenses/BSD-3-Clause
  */
- 
+
 /**
  * Namespace
  */

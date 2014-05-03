@@ -7,5 +7,8 @@
  * @license     BSD-3-Clause, http://opensource.org/licenses/BSD-3-Clause
  */
 
-// Action happens a level higher
-include '../index.php';
+// Startup application
+$GLOBALS['application'] = include dirname(__FILE__) . '/application.php';
+
+// Load resque runner
+include VENDOR . 'chrisboulton/php-resque/resque.php';
