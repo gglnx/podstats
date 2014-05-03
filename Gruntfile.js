@@ -91,6 +91,7 @@ module.exports = function(grunt) {
 							cors(),
 							mountFolder(connect, '.tmp'),
 							mountFolder(connect, paths.assets),
+							mountFolder(connect, paths.public),
 							lrSnippet,
 							modRewrite([
 								'^(.+)$ /index.dev.php?$1'
