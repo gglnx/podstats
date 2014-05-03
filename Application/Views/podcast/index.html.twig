@@ -14,6 +14,7 @@
 			new Morris.Area({
 				element: 'downloads',
 				data: {{ downloads | raw }},
+				gridTextFamily: '"PT Sans", Helmet, Freesans, sans-serif',
 				xkey: 'date',
 				fillOpacity: 0.4,
 				xLabels: '{{ timeframe.matched.3 }}',
@@ -29,6 +30,26 @@
 				labels: ['Downloads']
 			});
 		</script>
+	</div>
+	
+	<div class="inner clearfix">
+		<div class="left">
+			<h2></h2>
+		</div>
+		
+		<div class="right">
+			<h2>Podcast-Clients</h2>
+			<div id="useragents" style="height: 300px;"></div>
+			<script type="text/javascript">
+				new Morris.Donut({
+					element: 'useragents',
+					data: {{ user_agents | raw }},
+					formatter: function formatDonutLabel(y, data) {
+						return y + '%';
+					}
+				});
+			</script>
+		</div>
 	</div>
 	
 	<div class="inner">

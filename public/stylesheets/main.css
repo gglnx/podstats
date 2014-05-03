@@ -141,6 +141,23 @@ body > main .inner {
 	width:960px;
 }
 
+body > main .inner .left {
+	width: 620px;
+	margin-right: 40px;
+	float: left;
+}
+
+body > main .inner .right {
+	width: 300px;
+	float: right;
+}
+
+body > main .fullsize {
+	max-width: 1400px;
+	margin: 0 auto;
+	min-width: 960px;
+}
+
 body > main header {
 	border-bottom:1px solid #ccc;
 	padding:15px 0;

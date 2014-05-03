@@ -99,10 +99,14 @@ class Podcast extends MasterController {
 		foreach ( $data["result"] as $episode )
 			$episodes[$episode["_id"]] = $episode["downloads"];
 			
+		// Get user agents
+		$user_agents = \Application\Repository\UserAgents::byPodcast($podcast->slug, $this->timeframe->query);
+	
 		return array(
 			"podcast" => $podcast,
 			"episodes" => $episodes,
-			"downloads" => json_encode($dataPoints)
+			"downloads" => json_encode($dataPoints),
+			"user_agents" => json_encode($user_agents)
 		);
 	}
 }

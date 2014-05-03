@@ -1,0 +1,51 @@
+# User Agents
+instacast_osx:
+    label: "Instacast (OS X)"
+    regex: /Instacast\/(\d{4})/
+instacast_ios:
+    label: "Instacast (iOS)"
+    regex: /Instacast\/((\d+).(\d+).(\d+))/
+downcast_osx:
+    label: "Downcast (OS X)"
+    regex: /Downcast(.*)CFNetwork/
+downcast_ios:
+    label: "Downcast (iOS)"
+    regex: /Downcast/
+gpodder:
+    label: "gPodder"
+    regex: /gPodder/
+itunes:
+    label: "iTunes"
+    regex: /iTunes/
+beyondpod:
+    label: "BeyondPod"
+    regex: /BeyondPod/
+podkicker:
+    label: "Podkicker"
+    regex: /Podkicker/
+pocketcasts_ios:
+    label: "Pocket Casts (iOS)"
+    regex: /Shifty Jelly Pocket Casts, iOS/
+pocketcasts_android:
+    label: "Pocket Casts (Android)"
+    regex: /Shifty Jelly Pocket Casts, Android/
+juice:
+    label: "Juice"
+    regex: /Juice/
+miro:
+    label: "Miro"
+    regex: /Miro/
+# PodcastApp?
+ipad:
+    label: "iPad"
+    regex: /AppleCoreMedia(.*)iPad/
+iphone:
+    label: "iPhone"
+    regex: /AppleCoreMedia(.*)iPhone/
+appletv:
+    label: "Apple TV"
+    regex: /AppleCoreMedia(.*)Apple TV/
+# Bots
+lavf:
+    label: "Bot (Lavf)"
+    regex: /Lavf/
