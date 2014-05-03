@@ -1,0 +1,25 @@
+{
+  "name": "podstats",
+  "version": "1.0.0",
+  "homepage": "https://github.com/gglnx/podstats",
+  "authors": [
+    "Dennis Morhardt <info@dennismorhardt.de>"
+  ],
+  "description": "Podstats generates epic statistics from your podcast download logs",
+  "main": "index.php",
+  "license": "BSD-3-Clause",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "Application/Assets/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "bootstrap": "~3.1.1",
+    "morris.js": "~0.5.0"
+  }
+}
