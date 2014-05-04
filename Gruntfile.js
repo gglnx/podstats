@@ -120,8 +120,8 @@ module.exports = function(grunt) {
 						'<%= paths.public %>/*',
 						'!<%= paths.public %>/.git*',
 						'!<%= paths.public %>/index.php*',
-						'!<%= paths.public %>/fonts/*',
-						'!<%= paths.public %>/stylesheets/*'
+						'!<%= paths.public %>/fonts*',
+						'!<%= paths.public %>/stylesheets*'
 					]
 				}]
 			},
