@@ -8,7 +8,7 @@
  */
 
 // Paths
-define('APP', dirname(__FILE__) . '/application/');
+define('APP', dirname(__FILE__) . '/Application/');
 define('VENDOR', dirname(__FILE__) . '/vendor/');
 
 // Load composer autoloader
