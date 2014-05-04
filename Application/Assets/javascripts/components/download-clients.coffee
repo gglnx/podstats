@@ -30,4 +30,5 @@ define ['jquery', 'moment', 'Raphael', 'morris'], ($, moment, Raphael) -> $ ()->
 			new Morris.Donut
 				element: $(el).attr 'id'
 				data: response.data
+				resize: true
 				formatter: (y)-> return y + '%'

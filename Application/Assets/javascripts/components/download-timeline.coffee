@@ -43,3 +43,4 @@ define ['jquery', 'moment', 'Raphael', 'morris'], ($, moment, Raphael) -> $ ()->
 					moment(date).format $(el).data 'xlabel-format'
 				ykeys: ['downloads']
 				labels: ['Downloads']
+				lineColors: ['#5C97BF']

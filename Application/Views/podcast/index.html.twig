@@ -1,33 +1,42 @@
 {% extends 'layout.html.twig' %}
 
 {% block content %}
-	<header>
-		<h1>{{ podcast.title }}</h1>
+	<header class="page-header">
+		<div class="container">
+			<h1>{{ podcast.title }}</h1>
+		</div>
 	</header>
 
-	<div class="fullsize">
-		<h2 class="inner">Downloads: {{ timeframe.human }}</h2>
+	<div class="container">
+		<h2>Downloads: {{ timeframe.human }}</h2>
+	</div>
+
+	<div class="container-fluid">
 		<div id="download-timeline" data-type="download-timeline" data-source="{{ path('api_v1_podcast_download_timeline', {'podcast': podcast.slug, 'timeframe': timeframe.raw}) }}" data-xlabel="{{ timeframe.matched.3 }}" data-xlabel-format="{{ timeframe.label }}" class="graph-loading"></div>
 	</div>
 
-	<div class="inner clearfix">
-		<div class="left">
+	<div class="container">
+		<div class="col-sm-8">
 			<h2></h2>
 		</div>
 
-		<div class="right">
+		<div class="col-sm-4">
 			<h2>Podcast-Clients</h2>
 			<div id="download-useragents" data-type="download-clients" data-source="{{ path('api_v1_podcast_download_clients', {'podcast': podcast.slug, 'timeframe': timeframe.raw}) }}" class="graph-loading"></div>
 		</div>
 	</div>
 
-	<div class="inner">
+	<div class="container">
 		<h2>Alle Episoden</h2>
-		{% for episode, downloads in episodes %}
-		<article class="episode">
-			<h3><a href="/{{ podcast.slug }}/{{ episode }}">{{ episode }}</a></h3>
-			<p><a href="/{{ podcast.slug }}/{{ episode }}">{{ downloads }} Downloads</a></p>
-		</article>
-		{% endfor %}
+		<div class="list-group">
+{% for episode, downloads in episodes %}
+			<a href="{{ path('episode_index', {'podcast': podcast.slug, 'episode': episode}) }}" class="list-group-item col-sm-3">
+				<article>
+					<h4 class="list-group-item-heading">{{ episode }}</h3>
+					<p class="list-group-item-text">{{ downloads }} Downloads</p>
+				</article>
+			</a>
+{% endfor %}
+		</div>
 	</div>
 {% endblock %}

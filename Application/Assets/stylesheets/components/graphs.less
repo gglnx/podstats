@@ -1,0 +1,47 @@
+/**
+ * @package     Podstats
+ * @link        http://podstats.org/
+ * @author      Dennis Morhardt <info@dennismorhardt.de>
+ * @copyright   Copyright 2014, Dennis Morhardt
+ * @license     BSD-3-Clause, http://opensource.org/licenses/BSD-3-Clause
+ */
+
+#download-timeline {
+	height: 350px;
+}
+
+#download-useragents {
+	height: 350px;
+}
+
+.graph-loading {
+	background-image: url('/images/loader@2x.gif');
+	background-size: 40px 40px;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.morris-hover {
+	position: absolute;
+	z-index: 1000;
+
+	&.morris-default-style {
+		border-radius: 10px;
+		padding: 6px;
+		color: #666;
+		background: rgba(255, 255, 255, 0.8);
+		border: solid 2px rgba(230, 230, 230, 0.8);
+		font-size: 12px;
+		text-align: center;
+
+		.morris-hover-row-label {
+			font-weight: bold;
+			margin: 0.25em 0;
+		}
+
+		.morris-hover-point {
+			white-space: nowrap;
+			margin: 0.1em 0;
+		}
+	}
+}
