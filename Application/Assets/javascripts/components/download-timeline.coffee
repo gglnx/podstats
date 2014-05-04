@@ -7,7 +7,7 @@
 ##
 
 # Download timeline
-define ['jquery', 'moment', 'morris'], ($, moment) -> $ ()->
+define ['jquery', 'moment', 'Raphael', 'morris'], ($, moment, Raphael) -> $ ()->
 	$('[data-type="download-timeline"]').each (index, el)->
 		# Setup moment
 		moment.lang 'de'

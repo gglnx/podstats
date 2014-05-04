@@ -7,7 +7,7 @@
 ##
 
 # Download clients
-define ['jquery', 'moment', 'morris'], ($, moment) -> $ ()->
+define ['jquery', 'moment', 'Raphael', 'morris'], ($, moment, Raphael) -> $ ()->
 	$('[data-type="download-clients"]').each (index, el)->
 		# Setup moment
 		moment.lang 'de'
