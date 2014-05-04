@@ -6,3 +6,4 @@ composer.lock
 node_modules
 Application/Cache
 Application/Assets/Components
+Gemfile.lock
