@@ -26,7 +26,9 @@ class MasterController extends \Nautik\Controller {
 			'singluar' => ['h' => 'Eine Stunde', 'd' => 'Ein Tag', 'm' => 'Ein Monat', 'y' => 'Ein Jahr'],
 			'plural' => ['h' => '%d Stunden', 'd' => '%d Tage', 'm' => '%d Monate', 'y' => '%d Jahre'],
 			'today' => 'Heute',
-			'yesterday' => 'Gestern'
+			'yesterday' => 'Gestern',
+			'month' => 'Aktueller Monat',
+			'year' => 'Aktuelles Jahr'
 		];
 
 		// Get timeframe from URL
@@ -35,13 +37,47 @@ class MasterController extends \Nautik\Controller {
 		// Timeframe
 		$timeframe = (object) array("raw" => $timeframe_attr);
 
+		// Current year
+		if ( 'year' == $timeframe_attr ):
+			// Query filter
+			$timeframe->query = array(
+				'$gte' => new \MongoDate((new \DateTime('first day of January'))->getTimestamp()),
+				'$lt' => new \MongoDate((new \DateTime('first day of next year'))->modify('-1second')->getTimestamp())
+			);
+
+			// Human readable string
+			$timeframe->human = $strings[$timeframe_attr];
+
+			// Render labels as months
+			$timeframe->label = 'MM.YYYY';
+
+			// Add matched timeframe
+			$timeframe->matched = ['year', 1, 'months', 'month'];
+
+		// Current month
+		elseif ( 'month' == $timeframe_attr ):
+			// Query filter
+			$timeframe->query = array(
+				'$gte' => new \MongoDate((new \DateTime('first day of this month'))->getTimestamp()),
+				'$lt' => new \MongoDate((new \DateTime('first day of next month'))->modify('-1second')->getTimestamp())
+			);
+
+			// Human readable string
+			$timeframe->human = $strings[$timeframe_attr];
+
+			// Render labels as months
+			$timeframe->label = 'D.MM.';
+
+			// Add matched timeframe
+			$timeframe->matched = ['month', 31, 'days', 'day'];
+
 		// Time since now filter
-		if ( preg_match( '^(\d+)((hour|day|month|year)(s|))^i', $timeframe_attr, $matched ) ):
+		elseif ( preg_match( '^(\d+)((hour|day|month|year)(s|))^i', $timeframe_attr, $matched ) ):
 			// Query filter
 			$timeframe->query = array(
 				'$gt' => new \MongoDate((new \DateTime("-{$timeframe_attr}"))->getTimestamp())
 			);
-			
+
 			// Human readable string
 			$number = abs(intval($matched[1]));
 			$mode = ( 1 == $number ) ? 'singluar' : 'plural';

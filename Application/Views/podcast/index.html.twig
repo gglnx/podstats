@@ -10,6 +10,9 @@
 					<li{% if 'today' == timeframe.raw %} class="active"{% endif %}><a href="{{ path('podcast_index', {'podcast': podcast.slug, 'timeframe': 'today'}) }}">Heute</a></li>
 					<li{% if 'yesterday' == timeframe.raw %} class="active"{% endif %}><a href="{{ path('podcast_index', {'podcast': podcast.slug, 'timeframe': 'yesterday'}) }}">Gestern</a></li>
 					<li class="divider"></li>
+					<li{% if 'month' == timeframe.raw %} class="active"{% endif %}><a href="{{ path('podcast_index', {'podcast': podcast.slug, 'timeframe': 'month'}) }}">Aktueller Monat</a></li>
+					<li{% if 'year' == timeframe.raw %} class="active"{% endif %}><a href="{{ path('podcast_index', {'podcast': podcast.slug, 'timeframe': 'year'}) }}">Aktuelles Jahr</a></li>
+					<li class="divider"></li>
 					<li{% if '7days' == timeframe.raw %} class="active"{% endif %}><a href="{{ path('podcast_index', {'podcast': podcast.slug, 'timeframe': '7days'}) }}">Letzte 7 Tage</a></li>
 					<li{% if '14days' == timeframe.raw %} class="active"{% endif %}><a href="{{ path('podcast_index', {'podcast': podcast.slug, 'timeframe': '14days'}) }}">Letzte 14 Tage</a></li>
 					<li{% if '30days' == timeframe.raw %} class="active"{% endif %}><a href="{{ path('podcast_index', {'podcast': podcast.slug, 'timeframe': '30days'}) }}">Letzte 30 Tage</a></li>
