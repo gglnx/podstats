@@ -4,11 +4,24 @@
 	<header class="page-header">
 		<div class="container">
 			<h1>{{ podcast.title }}</h1>
+			<div class="btn-group pull-right timeframe-dropdown">
+				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Zeitraum: <span>{{ timeframe.human }}</span> <span class="caret"></span></button>
+				<ul class="dropdown-menu" role="menu">
+					<li{% if 'today' == timeframe.raw %} class="active"{% endif %}><a href="{{ path('podcast_index', {'podcast': podcast.slug, 'timeframe': 'today'}) }}">Heute</a></li>
+					<li{% if 'yesterday' == timeframe.raw %} class="active"{% endif %}><a href="{{ path('podcast_index', {'podcast': podcast.slug, 'timeframe': 'yesterday'}) }}">Gestern</a></li>
+					<li class="divider"></li>
+					<li{% if '7days' == timeframe.raw %} class="active"{% endif %}><a href="{{ path('podcast_index', {'podcast': podcast.slug, 'timeframe': '7days'}) }}">Letzte 7 Tage</a></li>
+					<li{% if '14days' == timeframe.raw %} class="active"{% endif %}><a href="{{ path('podcast_index', {'podcast': podcast.slug, 'timeframe': '14days'}) }}">Letzte 14 Tage</a></li>
+					<li{% if '30days' == timeframe.raw %} class="active"{% endif %}><a href="{{ path('podcast_index', {'podcast': podcast.slug, 'timeframe': '30days'}) }}">Letzte 30 Tage</a></li>
+					<li{% if '90days' == timeframe.raw %} class="active"{% endif %}><a href="{{ path('podcast_index', {'podcast': podcast.slug, 'timeframe': '90days'}) }}">Letzte 90 Tage</a></li>
+					<li{% if '365days' == timeframe.raw %} class="active"{% endif %}><a href="{{ path('podcast_index', {'podcast': podcast.slug, 'timeframe': '365days'}) }}">Letzte 365 Tage</a></li>
+				</ul>
+			</div>
 		</div>
 	</header>
 
 	<div class="container">
-		<h2>Downloads: {{ timeframe.human }}</h2>
+		<h2>Downloads</h2>
 	</div>
 
 	<div class="container-fluid">

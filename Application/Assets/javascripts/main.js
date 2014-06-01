@@ -17,11 +17,13 @@ requirejs.config({
 		'jquery': '../components/jquery/dist/jquery.min',
 		'moment': '../components/moment/min/moment-with-langs.min',
 		'Raphael': '../components/raphael/raphael-min',
-		'morris': '../components/morris.js/morris.min'
+		'morris': '../components/morris.js/morris.min',
+		'bootstrap': '../components/bootstrap/dist/js/bootstrap.min'
 	},
 
 	shim: {
-		'morris': ['Raphael', 'jquery']
+		'morris': ['Raphael', 'jquery'],
+		'bootstrap': ['jquery']
 	},
 
 	// Prevent caching issues, by adding an additional URL argument
@@ -32,6 +34,7 @@ requirejs.config({
  * Main
  */
 define([
+	'bootstrap',
 	'components/download-clients',
 	'components/download-timeline'
 ], function() {});
