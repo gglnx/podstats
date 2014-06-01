@@ -16,8 +16,7 @@ $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();
 
 // Middlewares
-$stack = (new Stack\Builder())
-	->push('Stack\Session');
+$stack = (new Stack\Builder());
 
 // Run application
 \Stack\run($stack->resolve($application));
