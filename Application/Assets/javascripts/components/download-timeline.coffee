@@ -26,6 +26,13 @@ define ['jquery', 'moment', 'Raphael', 'morris'], ($, moment, Raphael) -> $ ()->
 			# Remove loading class
 			$(el).removeClass 'graph-loading'
 
+			# No data? Show message
+			if response.data.length == 0
+				$(el).addClass 'no-data'
+				$(el).parent().addClass 'no-data'
+				$(el).append 'Keine Daten für diesen Zeitraum vorhanden.'
+				return
+
 			# Init morris
 			new Morris.Area
 				element: $(el).attr 'id'
