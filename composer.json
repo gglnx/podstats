@@ -26,6 +26,9 @@
     "gglnx/mongoium": "dev-master",
     "vlucas/phpdotenv": "1.0.*",
     "chrisboulton/php-resque": "1.2.*",
+    "ircmaxell/random-lib": "1.0.*@dev",
+    "ircmaxell/password-compat": "dev-master",
+    "cartalyst/sentry": "2.0.*@dev",
     "filp/whoops": "1"
   }
 }

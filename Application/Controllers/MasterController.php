@@ -17,6 +17,24 @@ namespace Application\Controllers;
  */
 class MasterController extends \Nautik\Controller {
 	/**
+	 *
+	 */
+	public $sentry;
+
+	/**
+	 *
+	 */
+	public function __construct( \Nautik\Nautik $application ) {
+		parent::__construct( $application );
+
+		// Initialize sentry
+		$this->sentry = new \Cartalyst\Sentry\Sentry(
+			new \Application\Repository\Users,
+			new \Application\Repository\Groups
+		);
+	}
+
+	/**
 	 * Translate timeframe URL parameter into DateTime and human
 	 * readable format
 	 */
