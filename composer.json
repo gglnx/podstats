@@ -29,6 +29,8 @@
     "ircmaxell/random-lib": "1.0.*@dev",
     "ircmaxell/password-compat": "dev-master",
     "cartalyst/sentry": "2.0.*@dev",
+    "symfony/translation": "2.5.*",
+    "symfony/twig-bridge": "2.5.*",
     "filp/whoops": "1"
   }
 }

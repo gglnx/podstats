@@ -24,6 +24,11 @@ class MasterController extends \Nautik\Controller {
 	/**
 	 *
 	 */
+	private $translator;
+
+	/**
+	 *
+	 */
 	public function __construct( \Nautik\Nautik $application ) {
 		parent::__construct( $application );
 
@@ -32,6 +37,9 @@ class MasterController extends \Nautik\Controller {
 			new \Application\Repository\Users,
 			new \Application\Repository\Groups
 		);
+
+		// Initialize translation
+		$this->initializeTranslation( 'de' );
 	}
 
 	/**
@@ -143,5 +151,67 @@ class MasterController extends \Nautik\Controller {
 		endif;
 
 		return $timeframe;
+	}
+
+	/**
+	 *
+	 */
+	public function getTranslator() {
+		return $this->translator;
+	}
+
+	/**
+	 *
+	 */
+	private function initializeTranslation( $language, $fallback = 'en' ) {
+		// Initialize translation component
+		$this->translator = new \Symfony\Component\Translation\Translator( $language );
+
+		// Add XLF reader
+		$this->translator->addLoader(
+			'xlf',
+			new \Symfony\Component\Translation\Loader\XliffFileLoader()
+		);
+
+		// Get translation files
+		$translationFiles = \Symfony\Component\Yaml\Yaml::parse( APP . 'Config/translations.yml' );
+
+		// Check if fallback lanugage exists
+		if ( false == array_key_exists( $language, $translationFiles ) )
+			throw new \RuntimeException( "No translation files for the fallback language [{$fallback}] exists." );
+
+		// Use fallback language if language doesn't exists
+		if ( false == array_key_exists( $language, $translationFiles ) )
+			$language = $fallback;
+
+		// Default options
+		$defaultOptions = array(
+			'type' => 'xlf',
+			'domain' => null,
+			'locationPrefix' => 'APP'
+		);
+
+		// Add translation files
+		foreach ( $translationFiles[$language] as $key => $options ):
+			// Merge options with default options
+			$options = array_merge( $defaultOptions, $options );
+
+			// Check if location exists
+			if ( false == array_key_exists( 'location', $options ) )
+				throw new \InvalidArgumentException( "Translation location is missing for {$key}." );
+
+			// Add ressource
+			$this->translator->addResource(
+				$options['type'],
+				constant( $options['locationPrefix'] ) . $options['location'],
+				$language,
+				$options['domain']
+			);
+		endforeach;
+
+		// Add template extensions
+		$this->getApplication()->templateRender->addExtension(
+			new \Symfony\Bridge\Twig\Extension\TranslationExtension( $this->translator )
+		);
 	}
 }
