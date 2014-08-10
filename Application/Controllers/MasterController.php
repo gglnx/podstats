@@ -29,6 +29,11 @@ class MasterController extends \Nautik\Controller {
 	/**
 	 *
 	 */
+	private $formFactory;
+
+	/**
+	 *
+	 */
 	public function __construct( \Nautik\Nautik $application ) {
 		parent::__construct( $application );
 
@@ -40,6 +45,34 @@ class MasterController extends \Nautik\Controller {
 
 		// Initialize translation
 		$this->initializeTranslation( 'de' );
+
+		// Initialize CSRF protection
+		$csrfProvider = new \Symfony\Component\Form\Extension\Csrf\CsrfProvider\SessionCsrfProvider(
+			$this->getApplication()->session,
+			getenv( 'CSRF_SECRET' )
+		);
+
+		// Add symfony/form to our Twig instance
+		$this->getApplication()->templateRender->getLoader()->addPath(
+			VENDOR . 'symfony/twig-bridge/Symfony/Bridge/Twig/Resources/views/Form'
+		);
+
+		$formEngine = new \Symfony\Bridge\Twig\Form\TwigRendererEngine( [ 'form_div_layout.html.twig' ] );
+		$formEngine->setEnvironment( $this->getApplication()->templateRender );
+
+		$this->getApplication()->templateRender->addExtension(
+			new \Symfony\Bridge\Twig\Extension\FormExtension(
+				new \Symfony\Bridge\Twig\Form\TwigRenderer( $formEngine, $csrfProvider )
+			)
+		);
+
+		// Initialize form factory
+		$this->formFactory = \Symfony\Component\Form\Forms::createFormFactoryBuilder()
+			->addExtension( new \Symfony\Component\Form\Extension\Csrf\CsrfExtension( $csrfProvider ) )
+			->addExtension( new \Symfony\Component\Form\Extension\Validator\ValidatorExtension(
+				\Symfony\Component\Validator\Validation::createValidator()
+			) )
+			->getFormFactory();
 	}
 
 	/**
@@ -151,6 +184,13 @@ class MasterController extends \Nautik\Controller {
 		endif;
 
 		return $timeframe;
+	}
+
+	/**
+	 *
+	 */
+	public function getFormFactory() {
+		return $this->formFactory;
 	}
 
 	/**
