@@ -66,12 +66,16 @@ class MasterController extends \Nautik\Controller {
 			)
 		);
 
+		// Initialize validation
+		$validator = \Symfony\Component\Validator\Validation::createValidatorBuilder()
+			->setTranslator( $this->getTranslator() )
+			->setTranslationDomain( 'validators' )
+			->getValidator();
+
 		// Initialize form factory
 		$this->formFactory = \Symfony\Component\Form\Forms::createFormFactoryBuilder()
 			->addExtension( new \Symfony\Component\Form\Extension\Csrf\CsrfExtension( $csrfProvider ) )
-			->addExtension( new \Symfony\Component\Form\Extension\Validator\ValidatorExtension(
-				\Symfony\Component\Validator\Validation::createValidator()
-			) )
+			->addExtension( new \Symfony\Component\Form\Extension\Validator\ValidatorExtension( $validator ) )
 			->getFormFactory();
 
 		// Add braincrafted/bootstrap-bundle
