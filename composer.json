@@ -34,6 +34,7 @@
     "symfony/validator": "2.5.*",
     "symfony/translation": "2.5.*",
     "symfony/twig-bridge": "2.5.*",
+    "braincrafted/bootstrap-bundle": "dev-master",
     "filp/whoops": "1"
   }
 }

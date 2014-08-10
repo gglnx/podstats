@@ -57,7 +57,7 @@ class MasterController extends \Nautik\Controller {
 			VENDOR . 'symfony/twig-bridge/Symfony/Bridge/Twig/Resources/views/Form'
 		);
 
-		$formEngine = new \Symfony\Bridge\Twig\Form\TwigRendererEngine( [ 'form_div_layout.html.twig' ] );
+		$formEngine = new \Symfony\Bridge\Twig\Form\TwigRendererEngine( [ 'form.html.twig' ] );
 		$formEngine->setEnvironment( $this->getApplication()->templateRender );
 
 		$this->getApplication()->templateRender->addExtension(
@@ -73,6 +73,14 @@ class MasterController extends \Nautik\Controller {
 				\Symfony\Component\Validator\Validation::createValidator()
 			) )
 			->getFormFactory();
+
+		// Add braincrafted/bootstrap-bundle
+		$this->getApplication()->templateRender->setExtensions( [
+			new \Braincrafted\Bundle\BootstrapBundle\Twig\BootstrapBadgeExtension(),
+			new \Braincrafted\Bundle\BootstrapBundle\Twig\BootstrapLabelExtension(),
+			new \Braincrafted\Bundle\BootstrapBundle\Twig\BootstrapIconExtension(),
+			new \Braincrafted\Bundle\BootstrapBundle\Twig\BootstrapFormExtension()
+		] );
 	}
 
 	/**
