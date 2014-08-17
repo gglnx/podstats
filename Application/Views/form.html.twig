@@ -802,6 +802,10 @@
 	{% endspaceless %}
 {% endblock form_enctype %}
 
+{% block form_globalerrors %}
+	{{ block('global_form_errors') }}
+{% endblock form_globalerrors %}
+
 {% block global_form_errors %}
 	{% if errors|length > 0 %}
 		{% set global_errors = true %}

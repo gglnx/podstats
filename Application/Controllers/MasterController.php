@@ -43,6 +43,9 @@ class MasterController extends \Nautik\Controller {
 			new \Application\Repository\Groups
 		);
 
+		// Disable throttling
+		$this->sentry->getThrottleProvider()->disable();
+
 		// Initialize translation
 		$this->initializeTranslation( 'de' );
 
@@ -85,6 +88,14 @@ class MasterController extends \Nautik\Controller {
 			new \Braincrafted\Bundle\BootstrapBundle\Twig\BootstrapIconExtension(),
 			new \Braincrafted\Bundle\BootstrapBundle\Twig\BootstrapFormExtension()
 		] );
+
+		// Add form helper for global errors
+		$this->getApplication()->templateRender->addFunction(
+			new \Twig_SimpleFunction( 'form_globalerrors', null, array(
+				'node_class' => 'Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode',
+				'is_safe' => array( 'html' )
+			) )
+		);
 	}
 
 	/**

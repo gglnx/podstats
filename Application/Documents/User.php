@@ -10,7 +10,7 @@
 /**
  * Namespace
  */
-namespace Application\Repository;
+namespace Application\Documents;
 
 /**
  * Exceptions
@@ -21,6 +21,7 @@ use \Cartalyst\Sentry\Users\UserExistsException;
 use \Cartalyst\Sentry\Users\UserAlreadyActivatedException;
 use \Cartalyst\Sentry\Users\UserNotFoundException;
 use \Cartalyst\Sentry\Users\WrongPasswordException;
+use \Cartalyst\Sentry\Groups\GroupInterface;
 use \Mongoium\NothingFoundException;
 
 /**
@@ -39,6 +40,16 @@ class User extends \Mongoium\Document implements \Cartalyst\Sentry\Users\UserInt
 	 *
 	 */
 	private $__mergedPermissions = array();
+
+	/**
+	 *
+	 */
+	public function __set( $parameter, $value ) {
+		if ( $parameter == $this->getPasswordName() )
+			$value = password_hash( $value, PASSWORD_DEFAULT );
+
+		parent::__set( $parameter, $value );
+	}
 
 	/**
 	 *
@@ -73,13 +84,6 @@ class User extends \Mongoium\Document implements \Cartalyst\Sentry\Users\UserInt
 	 */
 	public function getPassword() {
 		return $this->{$this->getPasswordName()};
-	}
-
-	/**
-	 *
-	 */
-	public function getPermissions() {
-		return $this->permissions;
 	}
 
 	/**
@@ -130,7 +134,7 @@ class User extends \Mongoium\Document implements \Cartalyst\Sentry\Users\UserInt
 		$this->validate();
 
 		// Save document
-		$this->save();
+		parent::save();
 	}
 
 	/**
@@ -444,7 +448,7 @@ class User extends \Mongoium\Document implements \Cartalyst\Sentry\Users\UserInt
 
 				foreach ( $mergedPermissions as $mergedPermission => $value ):
 					// This time check if the mergedPermission ends in wildcard "*" symbol.
-					if ( ( strlen( $mergedPermission ) > 1) && substr( $mergedPermission, -strlen( '*' ) ) === '*' )
+					if ( ( strlen( $mergedPermission ) > 1) && substr( $mergedPermission, -strlen( '*' ) ) === '*' ):
 						$matched = false;
 
 						// Strip the '*' off the end of the permission.
@@ -452,7 +456,7 @@ class User extends \Mongoium\Document implements \Cartalyst\Sentry\Users\UserInt
 
 						// We will make sure that the merged permission does not
 						// exactly match our permission, but starts with it.
-						if ( $checkMergedPermission != $permission && strpos( $permission, $checkMergedPermission ) === 0 && $value == 1 )
+						if ( $checkMergedPermission != $permission && strpos( $permission, $checkMergedPermission ) === 0 && $value == 1 ):
 							$matched = true;
 							break;
 						endif;

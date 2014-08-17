@@ -24,6 +24,16 @@ use \Mongoium\Document as Document;
  */
 class Podcast extends MasterController {
 	public function indexAction() {
+		// Check if user is logged in
+		if ( false == $this->sentry->check() ):
+			return $this->redirect( $this->path( 'login', array(
+				'origin' => $this->path( 'podcast_index', array(
+					'podcast' => $this->attr( 'podcast' ),
+					'timeframe' => $this->attr( 'timeframe' )
+				) )
+			) ) );
+		endif;
+
 		// Timeframe
 		$this->timeframe = $this->timeframe();
 
