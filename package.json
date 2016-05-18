@@ -29,6 +29,10 @@
     "grunt-svgmin": "~0.3.0",
     "grunt-webfont": "~0.2.1",
     "matchdep": "~0.3.0",
+    "http-proxy": "^1.5.3",
+    "php-built-in-server": "~0.1.4",
+    "get-port": "~1.0.0",
+    "grunt-connect-proxy": "^0.1.11",
     "grunt-contrib-requirejs": "~0.4.4"
   },
   "engines": {

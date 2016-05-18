@@ -86,18 +86,71 @@ module.exports = function(grunt) {
 			},
 			livereload: {
 				options: {
-					middleware: function (connect) {
-						return [
-							cors(),
-							mountFolder(connect, '.tmp'),
-							mountFolder(connect, paths.assets),
-							mountFolder(connect, paths.public),
-							lrSnippet,
-							modRewrite([
-								'^(.+)$ /index.dev.php?$1'
-							]),
-							phpGateway('public')
-						];
+					middleware: function(connect, options) {
+						var middlewares = [];
+						var directory = options.directory || options.base[options.base.length - 1];
+
+						if ( !Array.isArray(options.base ) )
+							options.base = [options.base];
+
+						// PHP backend
+						require('get-port')(function (error, port) {
+							var phpServer = require('php-built-in-server');
+							var server = new phpServer();
+
+							server.on('listening', function (event) {
+								console.log('[LISTENING]', event.host.address + ':' + event.host.port);
+
+								var proxy = require('grunt-connect-proxy/lib/utils');
+								var proxyConfig = {
+									context: '/',
+									host: '127.0.0.1',
+									port: event.host.port,
+									https: false,
+									xforward: true,
+									rules: [],
+									ws: false,
+									headers: {
+										'Host': 'localhost:9000'
+									}
+								};
+
+								proxy.registerProxy({
+									server: require('http-proxy').createProxyServer({
+										target: proxyConfig,
+										secure: proxyConfig.https,
+										xfwd: proxyConfig.xforward
+									}),
+									config: proxyConfig
+								});
+
+								middlewares.push( proxy.proxyRequest );
+							});
+
+							server.on('error', function (event) {
+								console.log('[ERROR]', event.error.toString());
+							});
+
+							server.listen( require('path').resolve('public'), port, '127.0.0.1', require('path').resolve('public/index.php'), {
+								'log_errors': '1',
+								'error_log': require('path').resolve('logs/errors.log'),
+								'date.timezone': 'Europe/Berlin'
+							} );
+						});
+
+						// Livereload
+						middlewares.push( require('connect-livereload')({
+							port: 35729
+						}) );
+
+						// Serve generated files
+						middlewares.push( connect.static(require('path').resolve('.tmp')) );
+
+						// Serve static content
+						//middlewares.push( connect.static(require('path').resolve(paths.public)) );
+						middlewares.push( connect.static(require('path').resolve(paths.assets)) );
+
+						return middlewares;
 					}
 				}
 			}
