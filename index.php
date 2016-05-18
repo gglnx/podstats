@@ -10,11 +10,6 @@
 // Startup application
 $application = include dirname(__FILE__) . '/application.php';
 
-// Exception handler
-$whoops = new \Whoops\Run;
-$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
-$whoops->register();
-
 // Middlewares
 $stack = (new Stack\Builder());
 

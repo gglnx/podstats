@@ -15,6 +15,11 @@ define('VENDOR', dirname(__FILE__) . '/vendor/');
 $composer = include VENDOR . 'autoload.php';
 $composer->set("Application", array(dirname(__FILE__)));
 
+// Exception handler
+$whoops = new \Whoops\Run;
+$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+$whoops->register();
+
 // Load environment variables, setup required variables
 Dotenv::load(__DIR__);
 Dotenv::required(['MONGO_HOST', 'MONGO_DATABASE']);
