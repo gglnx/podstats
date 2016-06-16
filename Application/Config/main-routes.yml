@@ -8,6 +8,11 @@ static:
     path: /pages/{page}
     defaults: { _controller: Pages, _action: render }
 
+# Login
+login:
+    path: /session/new
+    defaults: { _controller: Session, _action: new }
+
 # Index for a podcast
 podcast_index:
     path: /{podcast}/{timeframe}

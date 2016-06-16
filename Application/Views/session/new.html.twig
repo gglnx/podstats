@@ -1,0 +1,25 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+	<div class="container">
+		{{ form_start(form, {'attr': {'class': 'col-md-6 col-md-offset-3'}}) }}
+			<div id="login" class="panel panel-default panel-max-margin">
+				<div class="panel-heading">
+					<h2 class="panel-title">Einloggen</h2>
+				</div>
+
+				<div class="panel-body">
+					{{ form_globalerrors(form) }}
+					{{ form_row(form.username) }}
+					{{ form_row(form.password) }}
+					{{ form_row(form.remember) }}
+				</div>
+
+				<div class="panel-footer">
+					{{ form_row(form.submit) }}
+				</div>
+			</div>
+		{{ form_rest(form) }}
+		{{ form_end(form) }}
+	</div>
+{% endblock %}

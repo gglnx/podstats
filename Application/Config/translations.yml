@@ -1,0 +1,22 @@
+en:
+    symfony_form:
+        type: xlf
+        location: symfony/form/Symfony/Component/Form/Resources/translations/validators.en.xlf
+        locationPrefix: VENDOR
+        domain: validators
+    symfony_validator:
+        type: xlf
+        location: symfony/validator/Symfony/Component/Validator/Resources/translations/validators.en.xlf
+        locationPrefix: VENDOR
+        domain: validators
+de:
+    symfony_form:
+        type: xlf
+        location: symfony/form/Symfony/Component/Form/Resources/translations/validators.de.xlf
+        locationPrefix: VENDOR
+        domain: validators
+    symfony_validator:
+        type: xlf
+        location: symfony/validator/Symfony/Component/Validator/Resources/translations/validators.de.xlf
+        locationPrefix: VENDOR
+        domain: validators

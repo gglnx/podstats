@@ -26,6 +26,15 @@
     "gglnx/mongoium": "dev-master",
     "vlucas/phpdotenv": "1.0.*",
     "chrisboulton/php-resque": "1.2.*",
+    "ircmaxell/random-lib": "1.0.*@dev",
+    "ircmaxell/password-compat": "dev-master",
+    "cartalyst/sentry": "2.0.*@dev",
+    "symfony/form": "2.5.*",
+    "symfony/security-csrf": "2.5.*",
+    "symfony/validator": "2.5.*",
+    "symfony/translation": "2.5.*",
+    "symfony/twig-bridge": "2.5.*",
+    "braincrafted/bootstrap-bundle": "dev-master",
     "filp/whoops": "1"
   }
 }

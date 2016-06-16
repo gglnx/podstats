@@ -17,6 +17,88 @@ namespace Application\Controllers;
  */
 class MasterController extends \Nautik\Controller {
 	/**
+	 *
+	 */
+	public $sentry;
+
+	/**
+	 *
+	 */
+	private $translator;
+
+	/**
+	 *
+	 */
+	private $formFactory;
+
+	/**
+	 *
+	 */
+	public function __construct( \Nautik\Nautik $application ) {
+		parent::__construct( $application );
+
+		// Initialize sentry
+		$this->sentry = new \Cartalyst\Sentry\Sentry(
+			new \Application\Repository\Users,
+			new \Application\Repository\Groups
+		);
+
+		// Disable throttling
+		$this->sentry->getThrottleProvider()->disable();
+
+		// Initialize translation
+		$this->initializeTranslation( 'de' );
+
+		// Initialize CSRF protection
+		$csrfProvider = new \Symfony\Component\Form\Extension\Csrf\CsrfProvider\SessionCsrfProvider(
+			$this->getApplication()->session,
+			getenv( 'CSRF_SECRET' )
+		);
+
+		// Add symfony/form to our Twig instance
+		$this->getApplication()->templateRender->getLoader()->addPath(
+			VENDOR . 'symfony/twig-bridge/Symfony/Bridge/Twig/Resources/views/Form'
+		);
+
+		$formEngine = new \Symfony\Bridge\Twig\Form\TwigRendererEngine( [ 'form.html.twig' ] );
+		$formEngine->setEnvironment( $this->getApplication()->templateRender );
+
+		$this->getApplication()->templateRender->addExtension(
+			new \Symfony\Bridge\Twig\Extension\FormExtension(
+				new \Symfony\Bridge\Twig\Form\TwigRenderer( $formEngine, $csrfProvider )
+			)
+		);
+
+		// Initialize validation
+		$validator = \Symfony\Component\Validator\Validation::createValidatorBuilder()
+			->setTranslator( $this->getTranslator() )
+			->setTranslationDomain( 'validators' )
+			->getValidator();
+
+		// Initialize form factory
+		$this->formFactory = \Symfony\Component\Form\Forms::createFormFactoryBuilder()
+			->addExtension( new \Symfony\Component\Form\Extension\Csrf\CsrfExtension( $csrfProvider ) )
+			->addExtension( new \Symfony\Component\Form\Extension\Validator\ValidatorExtension( $validator ) )
+			->getFormFactory();
+
+		// Add braincrafted/bootstrap-bundle
+		$this->getApplication()->templateRender->setExtensions( [
+			new \Braincrafted\Bundle\BootstrapBundle\Twig\BootstrapBadgeExtension(),
+			new \Braincrafted\Bundle\BootstrapBundle\Twig\BootstrapLabelExtension(),
+			new \Braincrafted\Bundle\BootstrapBundle\Twig\BootstrapIconExtension(),
+			new \Braincrafted\Bundle\BootstrapBundle\Twig\BootstrapFormExtension()
+		] );
+
+		// Add form helper for global errors
+		$this->getApplication()->templateRender->addFunction(
+			new \Twig_SimpleFunction( 'form_globalerrors', null, array(
+				'node_class' => 'Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode',
+				'is_safe' => array( 'html' )
+			) )
+		);
+	}
+
+	/**
 	 * Translate timeframe URL parameter into DateTime and human
 	 * readable format
 	 */
@@ -125,5 +207,74 @@ class MasterController extends \Nautik\Controller {
 		endif;
 
 		return $timeframe;
+	}
+
+	/**
+	 *
+	 */
+	public function getFormFactory() {
+		return $this->formFactory;
+	}
+
+	/**
+	 *
+	 */
+	public function getTranslator() {
+		return $this->translator;
+	}
+
+	/**
+	 *
+	 */
+	private function initializeTranslation( $language, $fallback = 'en' ) {
+		// Initialize translation component
+		$this->translator = new \Symfony\Component\Translation\Translator( $language );
+
+		// Add XLF reader
+		$this->translator->addLoader(
+			'xlf',
+			new \Symfony\Component\Translation\Loader\XliffFileLoader()
+		);
+
+		// Get translation files
+		$translationFiles = \Symfony\Component\Yaml\Yaml::parse( APP . 'Config/translations.yml' );
+
+		// Check if fallback lanugage exists
+		if ( false == array_key_exists( $language, $translationFiles ) )
+			throw new \RuntimeException( "No translation files for the fallback language [{$fallback}] exists." );
+
+		// Use fallback language if language doesn't exists
+		if ( false == array_key_exists( $language, $translationFiles ) )
+			$language = $fallback;
+
+		// Default options
+		$defaultOptions = array(
+			'type' => 'xlf',
+			'domain' => null,
+			'locationPrefix' => 'APP'
+		);
+
+		// Add translation files
+		foreach ( $translationFiles[$language] as $key => $options ):
+			// Merge options with default options
+			$options = array_merge( $defaultOptions, $options );
+
+			// Check if location exists
+			if ( false == array_key_exists( 'location', $options ) )
+				throw new \InvalidArgumentException( "Translation location is missing for {$key}." );
+
+			// Add ressource
+			$this->translator->addResource(
+				$options['type'],
+				constant( $options['locationPrefix'] ) . $options['location'],
+				$language,
+				$options['domain']
+			);
+		endforeach;
+
+		// Add template extensions
+		$this->getApplication()->templateRender->addExtension(
+			new \Symfony\Bridge\Twig\Extension\TranslationExtension( $this->translator )
+		);
 	}
 }
