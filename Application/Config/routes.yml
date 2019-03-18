@@ -4,3 +4,9 @@ master:
     requirements:
         id: ^[0-9a-f]{24}
         timeframe: ^(\d+(hour|day|month|year)(s|)|today|yesterday|month|year)
+
+api:
+    resource: "api-routes.yml"
+    requirements:
+        id: ^[0-9a-f]{24}
+        timeframe: ^(\d+(hour|day|month|year)(s|)|today|yesterday|month|year)

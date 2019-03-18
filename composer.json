@@ -26,6 +26,7 @@
     "gglnx/mongoium": "dev-master",
     "vlucas/phpdotenv": "1.0.*",
     "chrisboulton/php-resque": "1.2.*",
+    "willdurand/hateoas": "2.3.0",
     "filp/whoops": "1"
   }
 }

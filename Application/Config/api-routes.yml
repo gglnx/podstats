@@ -1,0 +1,4 @@
+# Debug API
+api_debug:
+    path: /api/1.0/debug.{_format}
+    defaults: { _controller: Api\Debug, _action: index, _format: json }
